@@ -13,7 +13,7 @@ def get_gsheet():
   credentials = service_account.Credentials.from_service_account_info(
       st.secrets["gcp_service_account"],
       scopes=[
-          "https://www.googleapis.com/auth/spreadsheets",
+          "https://www.googleapis.com/auth/spreadsheets",'https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive'
       ],
   )
   client = gspread.authorize(credentials)
@@ -39,4 +39,4 @@ sheet, df = get_gsheet()
 # '작업자' 값이 ''인 개수, 작업 종료일?
 
 for work_type in ['글나누기', '바꿔쓰기', '줄여쓰기', '요약하기']:
-  st.write(work_type, '남은 작업량:', len(df.loc[(df['작업 유형'] == work_type) & (df['작업자'] == '')]))
+  st.write(f'**{work_type}**', '남은 작업량:', len(df.loc[(df['작업 유형'] == work_type) & (df['작업자'] == '')]))
